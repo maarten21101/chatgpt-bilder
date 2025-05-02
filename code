@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bilder hochladen</title>
+  <title>Mehrere Bilder hochladen</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -12,29 +12,39 @@
     input[type="file"] {
       margin-bottom: 20px;
     }
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin-top: 10px;
+    .image-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .image-preview img {
+      max-width: 200px;
+      max-height: 200px;
+      border: 1px solid #ccc;
+      padding: 5px;
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
-  <h1>Eigenes Bild hochladen</h1>
-  <input type="file" accept="image/*" onchange="zeigeBild(event)" />
-  <div id="bildContainer"></div>
+  <h1>Mehrere Bilder hochladen</h1>
+  <input type="file" accept="image/*" multiple onchange="zeigeBilder(event)" />
+  <div class="image-preview" id="bildContainer"></div>
 
   <script>
-    function zeigeBild(event) {
-      const bildContainer = document.getElementById('bildContainer');
-      bildContainer.innerHTML = ""; // vorheriges Bild entfernen
-      const file = event.target.files[0];
-      if (file) {
-        const img = document.createElement('img');
-        img.src = URL.createObjectURL(file);
-        bildContainer.appendChild(img);
-      }
+    function zeigeBilder(event) {
+      const container = document.getElementById('bildContainer');
+      container.innerHTML = ""; // alte Bilder entfernen
+
+      const files = event.target.files;
+
+      Array.from(files).forEach(file => {
+        if (file && file.type.startsWith("image/")) {
+          const img = document.createElement('img');
+          img.src = URL.createObjectURL(file);
+          container.appendChild(img);
+        }
+      });
     }
   </script>
 </body>

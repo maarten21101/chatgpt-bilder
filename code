@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bilder hochladen</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    input[type="file"] {
+      margin-bottom: 20px;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Eigenes Bild hochladen</h1>
+  <input type="file" accept="image/*" onchange="zeigeBild(event)" />
+  <div id="bildContainer"></div>
+
+  <script>
+    function zeigeBild(event) {
+      const bildContainer = document.getElementById('bildContainer');
+      bildContainer.innerHTML = ""; // vorheriges Bild entfernen
+      const file = event.target.files[0];
+      if (file) {
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        bildContainer.appendChild(img);
+      }
+    }
+  </script>
+</body>
+</html>
